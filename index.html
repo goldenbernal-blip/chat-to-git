@@ -675,6 +675,14 @@ nav{
   border-color:rgba(255,255,255,.18);
 }
 .resume-preview::before{background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(157,183,202,.1))}
+.resume-preview iframe{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
 .contact-box::before{background:linear-gradient(90deg,rgba(255,255,255,.11),rgba(157,183,202,.12));filter:blur(34px)}
 .modal-overlay{background:rgba(0,0,0,.72)}
 .modal{background:rgba(8,10,14,.96)}
@@ -1036,11 +1044,27 @@ body::before{
   background:rgba(255,255,255,.045);
   margin-bottom:1.5rem;
 }
+.asset-frame.video-frame{
+  aspect-ratio:16/9;
+  background:#000;
+}
 .asset-frame iframe{
   width:100%;
   height:100%;
   border:0;
   display:block;
+}
+.asset-frame video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#000;
+}
+.asset-note{
+  margin:-.75rem 0 1.25rem;
+  color:rgba(247,248,251,.5);
+  font-size:12px;
 }
 .modal-actions{
   display:flex;
@@ -1549,9 +1573,7 @@ nav{
   <div class="sec-title">Full work history & skills</div>
   <div class="resume-box">
     <div class="resume-preview">
-      <i class="ti ti-file-text"></i>
-      <div class="resume-preview-title">Golden Grace Bernal — Resume</div>
-      <div class="resume-preview-sub">Operations & Systems Professional · 5+ years · Cebu City, PH</div>
+      <iframe src="https://www.canva.com/design/DAEmjyt7oDY/PQl3dlknYBQu6ug5jBJ97w/view?embed" loading="lazy" allowfullscreen allow="fullscreen"></iframe>
     </div>
     <div class="resume-actions">
       <!-- REPLACE # WITH YOUR GOOGLE DRIVE OR NOTION PDF LINK -->
@@ -1604,6 +1626,7 @@ const projects = {
     desc:"Replaced chaotic manual data entry with an AI-powered pipeline. Unstructured requests come in any format — Claude parses and structures them into clean JSON, routed via webhook through Zapier into Google Sheets, then cleaned and deduplicated via Apps Script. Eliminated hours of manual field-by-field entry for bulk team requests.",
     tags:["Claude API","Zapier","Apps Script","JSON","Webhooks","Google Sheets"],
     embedUrl:"#",
+    videoUrl:"assets/videos/ai-data-intake-pipeline.mp4",
     assetUrl:"https://canva.link/c5q31durnpg03m9"
   },
   p2:{
@@ -1612,6 +1635,7 @@ const projects = {
     desc:"Built a live serverless API endpoint on Vercel handling Slack slash commands (/caffpeach, /checkstands). Team members pull specific retail asset links instantly — no Drive hunting, no context switching. Deployed and maintained via terminal.",
     tags:["Vercel","Node.js","Slack API","Serverless","JavaScript"],
     embedUrl:"#",
+    videoUrl:"assets/videos/slack-asset-router-bot.mp4",
     assetUrl:"https://canva.link/afh0qbyzm74tpir"
   },
   p3:{
@@ -1627,7 +1651,7 @@ const projects = {
     meta:"Canva · Brand · Sales Enablement",
     desc:"Created a full library of sales-ready assets — pitch decks, sell sheets, team hub templates, onboarding materials, and brand-aligned collateral — built at scale across multiple brands. Followed brand guidelines and unblocked sales teams with ready-to-use, editable templates.",
     tags:["Canva","Pitch Decks","Sell Sheets","Brand Assets","Sales Enablement"],
-    embedUrl:"#",
+    embedUrl:"https://www.canva.com/design/DAHEv3rnrZs/5SemiJVVNfFbcQ24bwXhvg/view?embed",
     assetUrl:"https://canva.link/portf-gg"
   },
   resumeAsset:{
@@ -1635,22 +1659,29 @@ const projects = {
     meta:"Resume · Work History · Systems & Operations",
     desc:"A live resume preview can be embedded here from Canva, Google Drive, or another public document link. Keep a PDF download link as a backup for recruiters.",
     tags:["Resume","Operations","Systems"],
-    embedUrl:"#",
+    embedUrl:"https://www.canva.com/design/DAEmjyt7oDY/PQl3dlknYBQu6ug5jBJ97w/view?embed",
     assetUrl:"https://canva.link/konl1h38tg8wddl"
   }
 };
 
 function openModal(id) {
   const p = projects[id];
+  const hasVideo = p.videoUrl && p.videoUrl !== "#";
   const hasEmbed = p.embedUrl && p.embedUrl !== "#";
   const hasAsset = p.assetUrl && p.assetUrl !== "#";
   document.getElementById('modal-content').innerHTML = `
     <h2>${p.title}</h2>
     <div class="modal-meta">${p.meta}</div>
-    ${hasEmbed ? `
+    ${hasVideo ? `
+      <div class="asset-frame video-frame">
+        <video src="${p.videoUrl}" autoplay muted loop playsinline controls preload="metadata"></video>
+      </div>
+      <div class="asset-note">Preview plays inside the portfolio. Use the live asset link below for the synced Canva source.</div>
+    ` : hasEmbed ? `
       <div class="asset-frame">
         <iframe src="${p.embedUrl}" loading="lazy" allowfullscreen allow="fullscreen"></iframe>
       </div>
+      <div class="asset-note">If the preview does not load, open the live Canva asset below.</div>
     ` : `
       <div class="media-placeholder">
         <i class="ti ti-brand-canva"></i>
