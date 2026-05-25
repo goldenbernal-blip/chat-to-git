@@ -1097,6 +1097,12 @@ body::before{
   display:block;
   background:#000;
 }
+.asset-note{
+  margin:-.65rem 0 1.25rem;
+  color:rgba(247,248,251,.58);
+  font-size:12px;
+  line-height:1.5;
+}
 .modal-actions{
   display:flex;
   gap:.75rem;
@@ -1604,7 +1610,7 @@ nav{
   <div class="sec-title">Full work history & skills</div>
   <div class="resume-box">
     <div class="resume-preview live-resume">
-      <iframe src="https://www.canva.com/design/DAEmjyt7oDY/PQl3dlknYBQu6ug5jBJ97w/view?embed" loading="lazy" allowfullscreen allow="fullscreen" onload="this.parentElement.classList.add('loaded')"></iframe>
+      <iframe src="https://www.canva.com/design/DAEmjyt7oDY/g8yJcmf6WhSxJV8upSqhNw/view?embed" loading="lazy" allowfullscreen allow="fullscreen" onload="this.parentElement.classList.add('loaded')"></iframe>
       <div class="resume-fallback">
         <i class="ti ti-file-text"></i>
         <strong>Golden Grace Bernal — Resume</strong>
@@ -1613,8 +1619,8 @@ nav{
     </div>
     <div class="resume-actions">
       <!-- REPLACE # WITH YOUR GOOGLE DRIVE OR NOTION PDF LINK -->
-      <a href="https://canva.link/konl1h38tg8wddl" class="res-btn res-btn-primary" target="_blank" rel="noopener"><i class="ti ti-external-link"></i>Open live resume</a>
-      <a href="https://canva.link/konl1h38tg8wddl" class="res-btn res-btn-secondary" target="_blank" rel="noopener"><i class="ti ti-eye"></i>View full resume</a>
+      <a href="https://canva.link/uhdrm63xkkrrfsj" class="res-btn res-btn-primary" target="_blank" rel="noopener"><i class="ti ti-external-link"></i>Open live resume</a>
+      <a href="https://canva.link/uhdrm63xkkrrfsj" class="res-btn res-btn-secondary" target="_blank" rel="noopener"><i class="ti ti-eye"></i>View full resume</a>
     </div>
   </div>
 </section>
@@ -1695,8 +1701,8 @@ const projects = {
     meta:"Resume · Work History · Systems & Operations",
     desc:"A live resume preview can be embedded here from Canva, Google Drive, or another public document link. Keep a PDF download link as a backup for recruiters.",
     tags:["Resume","Operations","Systems"],
-    embedUrl:"https://www.canva.com/design/DAEmjyt7oDY/PQl3dlknYBQu6ug5jBJ97w/view?embed",
-    assetUrl:"https://canva.link/konl1h38tg8wddl"
+    embedUrl:"https://www.canva.com/design/DAEmjyt7oDY/g8yJcmf6WhSxJV8upSqhNw/view?embed",
+    assetUrl:"https://canva.link/uhdrm63xkkrrfsj"
   }
 };
 
@@ -1710,10 +1716,12 @@ function openModal(id) {
     <div class="modal-meta">${p.meta}</div>
     ${hasVideo ? `
       <div class="asset-frame video-frame">
-        <video autoplay muted loop playsinline controls preload="auto" data-preview-video>
+        <video autoplay muted loop playsinline controls preload="auto" data-preview-video oncanplay="this.play().catch(() => {})">
           <source src="${p.videoUrl}" type="video/mp4">
+          Your browser cannot play this preview inline.
         </video>
       </div>
+      <div class="asset-note">If the walkthrough does not start, press play in the frame or open the live view below.</div>
     ` : hasEmbed ? `
       <div class="asset-frame">
         <iframe src="${p.embedUrl}" loading="lazy" allowfullscreen allow="fullscreen"></iframe>
@@ -1737,6 +1745,7 @@ function openModal(id) {
   if (previewVideo) {
     previewVideo.muted = true;
     previewVideo.play().catch(() => {});
+    setTimeout(() => previewVideo.play().catch(() => {}), 300);
   }
 }
 function closeModal(e, force) {
