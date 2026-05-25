@@ -683,6 +683,42 @@ nav{
   border:0;
   display:block;
 }
+.resume-preview.live-resume{
+  height:clamp(420px,58vw,620px);
+  padding:0;
+  align-items:stretch;
+  justify-content:stretch;
+  background:rgba(0,0,0,.34);
+  border-style:solid;
+}
+.resume-preview.live-resume::before{
+  display:none;
+}
+.resume-fallback{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:.75rem;
+  padding:2rem;
+  text-align:center;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+  color:rgba(247,248,251,.72);
+}
+.resume-fallback i{
+  font-size:42px;
+  color:#fff;
+}
+.resume-fallback strong{
+  font-family:'Syne',sans-serif;
+  color:#fff;
+  font-size:18px;
+}
+.resume-preview.live-resume.loaded .resume-fallback{
+  display:none;
+}
 .contact-box::before{background:linear-gradient(90deg,rgba(255,255,255,.11),rgba(157,183,202,.12));filter:blur(34px)}
 .modal-overlay{background:rgba(0,0,0,.72)}
 .modal{background:rgba(8,10,14,.96)}
@@ -1061,11 +1097,6 @@ body::before{
   display:block;
   background:#000;
 }
-.asset-note{
-  margin:-.75rem 0 1.25rem;
-  color:rgba(247,248,251,.5);
-  font-size:12px;
-}
 .modal-actions{
   display:flex;
   gap:.75rem;
@@ -1403,14 +1434,14 @@ nav{
 <section id="process" class="process-section">
   <div class="sec-label">Process</div>
   <div class="sec-title">Inside my AI-assisted creative systems</div>
-  <div class="process-card">
-    <div class="process-copy">
-      <h3>Behind The Workflow</h3>
-      <p>A calm walkthrough of how I use AI to move from messy inputs into clear workflows, working systems, and polished execution.</p>
+    <div class="process-card">
+      <div class="process-copy">
+        <h3>Behind The Workflow</h3>
+      <p>The story behind this portfolio: how I used AI tools to shape the concept, refine the interface, organize the case studies, and turn a visual direction into a working portfolio system.</p>
       <div class="project-tags">
         <span class="ptag">AI Workflows</span>
         <span class="ptag">Creative Ops</span>
-        <span class="ptag">Systems Thinking</span>
+        <span class="ptag">Portfolio Build</span>
       </div>
     </div>
     <div class="embed-shell">
@@ -1451,9 +1482,9 @@ nav{
     </div>
     <div class="project-card" onclick="openModal('p4')">
       <div class="project-num">03</div>
-      <h3>Canva Design System</h3>
-      <p>Sales decks, pitch materials, team hubs — built at scale across multiple brands.</p>
-      <div class="project-tags"><span class="ptag">Canva</span><span class="ptag">Brand</span><span class="ptag">Sales Enablement</span></div>
+      <h3>Canva Sales & Brand Materials</h3>
+      <p>Fluent execution inside brand templates — renders, one-pagers, sell sheets, and polished presentations.</p>
+      <div class="project-tags"><span class="ptag">Canva</span><span class="ptag">Brand Templates</span><span class="ptag">Sales Materials</span></div>
       <div class="project-card-actions">
         <div class="view-btn"><i class="ti ti-arrow-right"></i> View case study</div>
         <a class="project-live-link" href="https://canva.link/portf-gg" target="_blank" rel="noopener" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i> Live preview</a>
@@ -1572,8 +1603,13 @@ nav{
   <div class="sec-label">Resume</div>
   <div class="sec-title">Full work history & skills</div>
   <div class="resume-box">
-    <div class="resume-preview">
-      <iframe src="https://www.canva.com/design/DAEmjyt7oDY/PQl3dlknYBQu6ug5jBJ97w/view?embed" loading="lazy" allowfullscreen allow="fullscreen"></iframe>
+    <div class="resume-preview live-resume">
+      <iframe src="https://www.canva.com/design/DAEmjyt7oDY/PQl3dlknYBQu6ug5jBJ97w/view?embed" loading="lazy" allowfullscreen allow="fullscreen" onload="this.parentElement.classList.add('loaded')"></iframe>
+      <div class="resume-fallback">
+        <i class="ti ti-file-text"></i>
+        <strong>Golden Grace Bernal — Resume</strong>
+        <span>Live resume preview loads here when Canva allows embedding.</span>
+      </div>
     </div>
     <div class="resume-actions">
       <!-- REPLACE # WITH YOUR GOOGLE DRIVE OR NOTION PDF LINK -->
@@ -1615,7 +1651,7 @@ const projects = {
   intro:{
     title:"Behind The Workflow",
     meta:"Intro · AI Workflow · Creative Systems",
-    desc:"A personal process walkthrough for how I use AI to clarify messy inputs, build workflows, and turn ideas into usable systems.",
+    desc:"A walkthrough of how this portfolio itself came together using AI tools: shaping the visual direction, refining the structure, organizing the case studies, and turning the concept into a working portfolio experience.",
     tags:["AI Workflow","Creative Systems","Process"],
     embedUrl:"#",
     assetUrl:"#"
@@ -1647,10 +1683,10 @@ const projects = {
     assetUrl:"#"
   },
   p4:{
-    title:"Canva Design System",
-    meta:"Canva · Brand · Sales Enablement",
-    desc:"Created a full library of sales-ready assets — pitch decks, sell sheets, team hub templates, onboarding materials, and brand-aligned collateral — built at scale across multiple brands. Followed brand guidelines and unblocked sales teams with ready-to-use, editable templates.",
-    tags:["Canva","Pitch Decks","Sell Sheets","Brand Assets","Sales Enablement"],
+    title:"Canva Sales & Brand Materials",
+    meta:"Canva · Brand Templates · Sales Enablement",
+    desc:"Highly proficient in Canva and fluent inside existing brand systems. Produces professional sales materials including one-pagers, sell sheets, presentation decks, visual renders, and brand-aligned collateral without needing to reinvent the design system from scratch.",
+    tags:["Canva","Brand Templates","One-Pagers","Sell Sheets","Presentations"],
     embedUrl:"https://www.canva.com/design/DAHEv3rnrZs/5SemiJVVNfFbcQ24bwXhvg/view?embed",
     assetUrl:"https://canva.link/portf-gg"
   },
@@ -1674,14 +1710,14 @@ function openModal(id) {
     <div class="modal-meta">${p.meta}</div>
     ${hasVideo ? `
       <div class="asset-frame video-frame">
-        <video src="${p.videoUrl}" autoplay muted loop playsinline controls preload="metadata"></video>
+        <video autoplay muted loop playsinline controls preload="auto" data-preview-video>
+          <source src="${p.videoUrl}" type="video/mp4">
+        </video>
       </div>
-      <div class="asset-note">Preview plays inside the portfolio. Use the live asset link below for the synced Canva source.</div>
     ` : hasEmbed ? `
       <div class="asset-frame">
         <iframe src="${p.embedUrl}" loading="lazy" allowfullscreen allow="fullscreen"></iframe>
       </div>
-      <div class="asset-note">If the preview does not load, open the live Canva asset below.</div>
     ` : `
       <div class="media-placeholder">
         <i class="ti ti-brand-canva"></i>
@@ -1697,10 +1733,17 @@ function openModal(id) {
     ` : ""}
   `;
   document.getElementById('modal').classList.add('open');
+  const previewVideo = document.querySelector('[data-preview-video]');
+  if (previewVideo) {
+    previewVideo.muted = true;
+    previewVideo.play().catch(() => {});
+  }
 }
 function closeModal(e, force) {
-  if (force || e.target === document.getElementById('modal'))
+  if (force || e.target === document.getElementById('modal')) {
+    document.querySelectorAll('#modal-content video').forEach(v => v.pause());
     document.getElementById('modal').classList.remove('open');
+  }
 }
 function scroll2(id) {
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
