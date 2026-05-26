@@ -760,6 +760,10 @@ footer{border-top-color:rgba(235,242,250,.1)}
   filter:blur(22px) brightness(.36) contrast(1.15) saturate(.82);
   transform:scale(1.08);
 }
+.bg-side-missing .bg-video-fill{
+  opacity:.48;
+  filter:blur(16px) brightness(.72) contrast(1.12) saturate(.95);
+}
 .bg-video-main{
   object-fit:contain;
   filter:brightness(.82) contrast(1.04) saturate(.92);
@@ -1612,9 +1616,14 @@ body.ready .hero-copy{
 
 <video class="bg-video bg-video-fill" autoplay muted loop playsinline preload="auto" aria-hidden="true">
   <source src="assets/videos/butterfly-wisps.mp4" type="video/mp4">
+  <source src="videos/butterfly-wisps.mp4" type="video/mp4">
+  <source src="butterfly-wisps.mp4" type="video/mp4">
 </video>
 <video class="bg-video bg-video-main" autoplay muted loop playsinline preload="auto" aria-hidden="true">
   <source src="assets/videos/side-butterflies.mp4" type="video/mp4">
+  <source src="videos/side-butterflies.mp4" type="video/mp4">
+  <source src="side-butterflies.mp4" type="video/mp4">
+  <source src="assets/videos/butterfly-wisps.mp4" type="video/mp4">
 </video>
 <canvas id="bg"></canvas>
 <div class="orb orb1"></div>
@@ -2038,6 +2047,9 @@ window.addEventListener('load', () => {
     video.muted = true;
     video.play().catch(() => {});
     video.addEventListener('canplay', () => video.play().catch(() => {}), { once:false });
+    video.addEventListener('error', () => {
+      if (video.classList.contains('bg-video-main')) document.body.classList.add('bg-side-missing');
+    });
   });
 
   const revealTargets = document.querySelectorAll('section, .stats, footer');
