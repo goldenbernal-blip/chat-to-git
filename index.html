@@ -1256,6 +1256,7 @@ nav{
   border:1px solid rgba(255,255,255,.13);
   background:radial-gradient(circle at 70% 28%,rgba(255,255,255,.1),transparent 30%),rgba(0,0,0,.22);
   overflow:hidden;
+  position:relative;
 }
 .embed-empty{
   height:100%;
@@ -1270,6 +1271,22 @@ nav{
   padding:1.5rem;
 }
 .embed-empty i{font-size:32px;color:#fff}
+.process-video{
+  width:100%;
+  height:100%;
+  min-height:320px;
+  object-fit:contain;
+  display:block;
+  background:#000;
+}
+.process-fallback{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.025)),rgba(3,4,7,.86);
+}
+.embed-shell.video-ready .process-fallback{
+  display:none;
+}
 .asset-grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -1341,6 +1358,243 @@ nav{
     border-radius:8px;
   }
 }
+
+/* RESPONSIVE ATMOSPHERIC BACKGROUND REPAIR */
+.bg-video{
+  position:fixed;
+  pointer-events:none;
+  background:#030407;
+}
+.bg-video-fill{
+  display:block;
+  inset:-8vh -8vw;
+  width:116vw;
+  height:116vh;
+  object-fit:cover;
+  opacity:.48;
+  filter:blur(20px) brightness(.54) contrast(1.08) saturate(.92);
+  transform:scale(1.05);
+  mix-blend-mode:screen;
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+.bg-video-main{
+  inset:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  object-position:center center;
+  opacity:.28;
+  filter:brightness(.86) contrast(1.08) saturate(.9);
+  transform:scale(1.02);
+  animation:bgBreath 14s ease-in-out infinite alternate;
+  -webkit-mask-image:radial-gradient(ellipse at 72% 42%,#000 0%,rgba(0,0,0,.72) 38%,rgba(0,0,0,.2) 62%,transparent 82%);
+  mask-image:radial-gradient(ellipse at 72% 42%,#000 0%,rgba(0,0,0,.72) 38%,rgba(0,0,0,.2) 62%,transparent 82%);
+}
+body::before{
+  background:
+    linear-gradient(90deg,rgba(3,4,7,.98) 0%,rgba(3,4,7,.9) 34%,rgba(3,4,7,.68) 62%,rgba(3,4,7,.52) 100%),
+    radial-gradient(circle at 76% 34%,rgba(221,235,247,.12),transparent 31%),
+    radial-gradient(circle at 20% 72%,rgba(124,145,162,.12),transparent 34%),
+    linear-gradient(180deg,rgba(3,4,7,.28),rgba(3,4,7,.94));
+}
+.hero{
+  width:min(1180px,100%);
+}
+.hero-copy{
+  width:min(690px,100%);
+  background:linear-gradient(90deg,rgba(3,4,7,.82),rgba(3,4,7,.62),rgba(3,4,7,.22));
+}
+body.ready .hero-copy{
+  opacity:1 !important;
+  transform:translateY(0) !important;
+}
+@keyframes bgBreath{
+  from{transform:scale(1.02) translate3d(0,-10px,0)}
+  to{transform:scale(1.08) translate3d(-22px,14px,0)}
+}
+@media (min-width:1500px){
+  .bg-video-fill{
+    opacity:.56;
+    filter:blur(24px) brightness(.5) contrast(1.1) saturate(.9);
+  }
+  .bg-video-main{
+    object-fit:contain;
+    object-position:right center;
+    opacity:.44;
+    transform:scale(.9);
+    -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.28) 42%,#000 66%,rgba(0,0,0,.55) 84%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.28) 42%,#000 66%,rgba(0,0,0,.55) 84%,transparent 100%);
+  }
+  body::before{
+    background:
+      linear-gradient(90deg,rgba(3,4,7,.98) 0%,rgba(3,4,7,.9) 38%,rgba(3,4,7,.58) 68%,rgba(3,4,7,.72) 100%),
+      radial-gradient(circle at 72% 42%,rgba(221,235,247,.14),transparent 30%),
+      linear-gradient(180deg,rgba(3,4,7,.22),rgba(3,4,7,.94));
+  }
+}
+@media (max-width:900px){
+  .bg-video-fill{
+    inset:-6vh -18vw;
+    width:136vw;
+    height:112vh;
+    opacity:.42;
+    filter:blur(18px) brightness(.5) contrast(1.08) saturate(.9);
+  }
+  .bg-video-main{
+    inset:0;
+    width:100vw;
+    height:60vh;
+    object-fit:cover;
+    object-position:center top;
+    opacity:.24;
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.6) 45%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.6) 45%,transparent 100%);
+  }
+  body::before{
+    background:
+      linear-gradient(180deg,rgba(3,4,7,.62) 0%,rgba(3,4,7,.88) 36%,rgba(3,4,7,.98) 68%),
+      radial-gradient(circle at 50% 16%,rgba(221,235,247,.1),transparent 30%);
+  }
+  .hero{
+    min-height:auto;
+    padding-top:5.25rem;
+  }
+  .hero-copy{
+    width:100%;
+    background:rgba(3,4,7,.72);
+  }
+}
+@media (max-width:640px){
+  .bg-video-fill{
+    opacity:.34;
+    filter:blur(20px) brightness(.46) contrast(1.05);
+  }
+  .bg-video-main{
+    height:48vh;
+    opacity:.18;
+  }
+  .hero{
+    padding-top:4.5rem;
+  }
+  .hero-copy{
+    background:rgba(3,4,7,.78);
+  }
+}
+
+/* SIDE BUTTERFLY GRAPHIC FINAL PASS: keep the visual on the side, soften only the edges */
+.bg-video{
+  position:fixed;
+  pointer-events:none;
+  background:#030407;
+}
+.bg-video-fill{
+  display:block;
+  inset:-10vh -10vw;
+  width:120vw;
+  height:120vh;
+  object-fit:cover;
+  opacity:.3;
+  filter:blur(34px) brightness(.42) contrast(1.08) saturate(.9);
+  transform:scale(1.12);
+  mix-blend-mode:screen;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.18) 16%,#000 54%,rgba(0,0,0,.42) 80%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.18) 16%,#000 54%,rgba(0,0,0,.42) 80%,transparent 100%);
+}
+.bg-video-main{
+  inset:0 clamp(1rem,4vw,5rem) 0 auto;
+  width:clamp(380px,44vw,690px);
+  height:100vh;
+  object-fit:contain;
+  object-position:center center;
+  opacity:.82;
+  filter:brightness(.94) contrast(1.08) saturate(.92);
+  transform:none;
+  animation:videoArrive 1100ms cubic-bezier(.2,.8,.2,1) both, sideVideoFloat 10s ease-in-out 1200ms infinite alternate;
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 35%,rgba(0,0,0,.82) 54%,rgba(0,0,0,.34) 70%,transparent 86%);
+  mask-image:radial-gradient(ellipse at center,#000 35%,rgba(0,0,0,.82) 54%,rgba(0,0,0,.34) 70%,transparent 86%);
+}
+body::before{
+  background:
+    linear-gradient(90deg,rgba(3,4,7,.98) 0%,rgba(3,4,7,.94) 38%,rgba(3,4,7,.74) 62%,rgba(3,4,7,.52) 100%),
+    radial-gradient(circle at 78% 42%,rgba(221,235,247,.12),transparent 30%),
+    linear-gradient(180deg,rgba(3,4,7,.18),rgba(3,4,7,.9));
+}
+.hero{
+  max-width:1120px;
+  width:min(1120px,100%);
+}
+.hero-copy{
+  width:min(650px,100%);
+  background:linear-gradient(90deg,rgba(3,4,7,.86),rgba(3,4,7,.64),rgba(3,4,7,.16));
+}
+body.ready .hero-copy{
+  opacity:1 !important;
+  transform:translateY(0) !important;
+}
+@keyframes sideVideoFloat{
+  from{transform:translate3d(0,-7px,0) scale(1)}
+  to{transform:translate3d(-10px,10px,0) scale(1.015)}
+}
+@media (min-width:1500px){
+  .bg-video-fill{
+    opacity:.32;
+    filter:blur(32px) brightness(.38) contrast(1.1) saturate(.88);
+  }
+  .bg-video-main{
+    right:clamp(4rem,7vw,9rem);
+    width:clamp(460px,34vw,720px);
+    opacity:.86;
+    -webkit-mask-image:radial-gradient(ellipse at center,#000 34%,rgba(0,0,0,.8) 54%,rgba(0,0,0,.32) 70%,transparent 86%);
+    mask-image:radial-gradient(ellipse at center,#000 34%,rgba(0,0,0,.8) 54%,rgba(0,0,0,.32) 70%,transparent 86%);
+  }
+}
+@media (max-width:900px){
+  .bg-video-fill{
+    inset:-8vh -24vw;
+    width:148vw;
+    height:118vh;
+    opacity:.22;
+    filter:blur(26px) brightness(.38) contrast(1.05);
+  }
+  .bg-video-main{
+    inset:0 -8vw auto auto;
+    width:min(86vw,520px);
+    height:58vh;
+    object-fit:contain;
+    opacity:.38;
+    animation:videoArrive 1100ms cubic-bezier(.2,.8,.2,1) both;
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.74) 58%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.74) 58%,transparent 100%);
+  }
+  body::before{
+    background:
+      linear-gradient(180deg,rgba(3,4,7,.62) 0%,rgba(3,4,7,.9) 38%,rgba(3,4,7,.98) 70%),
+      radial-gradient(circle at 70% 18%,rgba(221,235,247,.1),transparent 30%);
+  }
+  .hero{
+    min-height:auto;
+    padding-top:5.25rem;
+  }
+  .hero-copy{
+    width:100%;
+    background:rgba(3,4,7,.74);
+  }
+}
+@media (max-width:640px){
+  .bg-video-main{
+    width:100vw;
+    right:-18vw;
+    height:46vh;
+    opacity:.28;
+  }
+  .bg-video-fill{
+    opacity:.18;
+  }
+  .hero-copy{
+    background:rgba(3,4,7,.8);
+  }
+}
 </style>
 </head>
 <body>
@@ -1349,7 +1603,7 @@ nav{
   <source src="assets/videos/butterfly-wisps.mp4" type="video/mp4">
 </video>
 <video class="bg-video bg-video-main" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-  <source src="assets/videos/glass-butterflies.mp4" type="video/mp4">
+  <source src="assets/videos/side-butterflies.mp4" type="video/mp4">
 </video>
 <canvas id="bg"></canvas>
 <div class="orb orb1"></div>
@@ -1451,9 +1705,12 @@ nav{
       </div>
     </div>
     <div class="embed-shell">
-      <div class="embed-empty">
+      <video class="process-video" autoplay muted loop controls playsinline preload="auto" oncanplay="this.parentElement.classList.add('video-ready'); this.play().catch(() => {})" onerror="this.parentElement.classList.remove('video-ready')">
+        <source src="assets/videos/behind-the-workflow.mp4" type="video/mp4">
+      </video>
+      <div class="embed-empty process-fallback">
         <i class="ti ti-sparkles"></i>
-        <span>Add intro / AI workflow Canva embed link</span>
+        <span>Behind the Workflow video is loading. If it does not appear, keep assets/videos/behind-the-workflow.mp4 next to this HTML file.</span>
       </div>
     </div>
   </div>
@@ -1767,6 +2024,12 @@ function switchTab(name, el) {
 window.addEventListener('load', () => {
   document.body.classList.add('ready');
 
+  document.querySelectorAll('.bg-video').forEach(video => {
+    video.muted = true;
+    video.play().catch(() => {});
+    video.addEventListener('canplay', () => video.play().catch(() => {}), { once:false });
+  });
+
   const revealTargets = document.querySelectorAll('section, .stats, footer');
   const reveal = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1778,6 +2041,22 @@ window.addEventListener('load', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
   revealTargets.forEach(el => reveal.observe(el));
+
+  const processVideo = document.querySelector('.process-video');
+  if (processVideo) {
+    processVideo.muted = true;
+    const playProcessVideo = () => processVideo.play().catch(() => {});
+    processVideo.addEventListener('canplay', playProcessVideo, { once: false });
+
+    const processVideoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) playProcessVideo();
+        else processVideo.pause();
+      });
+    }, { threshold: 0.35 });
+
+    processVideoObserver.observe(processVideo);
+  }
 });
 
 /* ---------- ANIMATED BACKGROUND ---------- */
